@@ -1,30 +1,29 @@
 #include "main.h"
 extern const lv_img_dsc_t team_logo;
 
-/**
- * A callback function for LLEMU's center button.
- *
- * When this callback is fired, it will toggle line 2 of the LCD text between
- * "I was pressed!" and nothing.
- */
-
 extern rd::Image teamLogo;
 
 // Create the touchscreen selector
 rd::Selector selector({
-    {"Middle Auton", middleAutonBlue, "", 200},
-    {"Right Auton", rightAutonBlue, "", 200},
-	{"Middle Auton", middleAutonRed, "", 341},
-    {"Right Auton", rightAutonRed, "", 341},
-    {"Skills", skillsAuton}
+    {"Middle Auton", middleAuton, ""},
+    {"Right Auton", rightAuton, ""},
+    {"Skills", skillsAuton, ""}
 });
 
 // initialize function. Runs on program startup
 void initialize() {
-    chassis.calibrate(); // calibrate sensors
 	selector.focus();
+    chassis.calibrate(); // calibrate sensors
 
-	ErrorLogger::info("Robot initialized");
+	liftPID.zero();
+
+	if (imu.is_installed() == true && vertical_encoder.is_installed() == true) {
+		ErrorLogger::info("Robot initialized");
+	} else if (imu.is_installed() == false) {
+		ErrorLogger::info("Imu not found");
+	} else if (vertical_encoder.is_installed() == false) {
+		ErrorLogger::info("Odom pod not found");
+	}
 }
 
 /**
@@ -91,9 +90,9 @@ void opcontrol() {
 		///
 		//Lift
 		if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1)){
-			liftD(127);
+			lift.move(127);
 		} else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2)){
-			liftD(-127);
+			lift.move(-127);
 		} else {
 			liftStop();
 		}

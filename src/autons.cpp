@@ -1,5 +1,6 @@
 #include "main.h"
-#include "helpers.hpp"
+
+ASSET(example_txt);
 
 void middleAutonBlue() {
     // Middle autonomous routine for blue alliance
@@ -10,7 +11,7 @@ void middleAutonBlue() {
 
 void rightAutonBlue() {
     // Right autonomous routine for blue alliance
-    chassis.moveToPose(10, 15, 90, 4000, {}, false);
+    chassis.moveToPose(24, 24, 270, 4000, {}, false);
     liftPID.move(500);
     
 }
@@ -27,4 +28,5 @@ void rightAutonRed() {
 
 void skillsAuton() {
     // Skills autonomous routine
+    chassis.follow(example_txt, 15, 4000);
 }

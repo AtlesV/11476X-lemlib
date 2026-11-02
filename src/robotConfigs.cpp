@@ -9,7 +9,7 @@ pros::MotorGroup right_motor_group({-4, 5}, pros::MotorGears::blue);
 // subsystems
 pros::Motor intake(3, pros::MotorGears::blue); // intake motor
 pros::Motor lift1(6, pros::MotorGears::red); // lift motor 1
-pros::Motor lift2(7, pros::MotorGears::red); // lift motor 2
+pros::Motor lift2(-7, pros::MotorGears::red); // lift motor 2
 pros::Motor claw(18); // claw motor
 pros::Motor clawOr(8); // claw orientation motor
 

@@ -8,6 +8,7 @@ extern pros::MotorGroup left_motor_group;
 extern pros::MotorGroup right_motor_group;
 extern lemlib::Chassis chassis;
 extern pros::Imu imu;
+extern pros::Rotation vertical_encoder;
 
 extern pros::Motor intake;
 extern pros::Motor lift1;

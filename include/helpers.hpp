@@ -12,6 +12,7 @@ public:
     // Move to an encoder position in degrees. This call blocks until reached
     // or until its safety timeout expires.
     void move(double targetDeg);
+    void zero();
 
 private:
     pros::Rotation& sensor;

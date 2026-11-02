@@ -1,7 +1,5 @@
 #pragma once
 
-void middleAutonBlue();
-void rightAutonBlue();
-void middleAutonRed();
-void rightAutonRed();
+void middleAuton();
+void rightAuton();
 void skillsAuton();

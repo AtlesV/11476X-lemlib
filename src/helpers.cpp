@@ -1,18 +1,8 @@
 #include "main.h"
-#include "helpers.hpp"
 
-void liftD(int speed){
-    lift1.move(speed);
-    lift2.move(speed);
-}
-
-void liftStop(){
-    lift1.brake();
-    lift2.brake();
-}
 
 LiftPID::LiftPID(pros::Rotation& sensor, pros::MotorGroup& motors,
-                 double kP, double kI, double kD)
+                double kP, double kI, double kD)
     : sensor(sensor), motors(motors), pid(kP, kI, kD) {}
 
 void LiftPID::move(double targetDeg) {
@@ -32,3 +22,13 @@ void LiftPID::move(double targetDeg) {
 }
 
 LiftPID liftPID(liftRotation, lift, 5, 0, 20);
+
+void LiftPID::zero() {
+    move(-1000);
+    sensor.reset_position();
+    if (sensor.is_installed() == true) {
+        ErrorLogger::info("Rotation sensor detected");
+    } else {
+        ErrorLogger::info("Rotation sensor not detected");
+    }
+}
