@@ -20,10 +20,16 @@ void initialize() {
 	if (imu.is_installed() == true && vertical_encoder.is_installed() == true) {
 		ErrorLogger::info("Robot initialized");
 	} else if (imu.is_installed() == false) {
-		ErrorLogger::info("Imu not found");
+		ErrorLogger::error("Imu not found");
 	} else if (vertical_encoder.is_installed() == false) {
-		ErrorLogger::info("Odom pod not found");
+		ErrorLogger::error("Odom pod not found");
 	}
+
+	lift.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
+	intake.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
+	claw.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
+	clawOr.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
+	clawOr.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
 }
 
 /**
@@ -79,6 +85,8 @@ void autonomous() {
 void opcontrol() {
     // loop forever
 	pros::Controller controller(pros::E_CONTROLLER_MASTER);
+	const std::uint32_t startTime = pros::millis();
+    bool rumbled = false;
     while (true) {
         // get left y and right x positions
         int leftY = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
@@ -94,7 +102,7 @@ void opcontrol() {
 		} else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2)){
 			lift.move(-127);
 		} else {
-			liftStop();
+			lift.brake();
 		}
 
 		///
@@ -129,6 +137,11 @@ void opcontrol() {
 			updateGeneralInfo();
 			lastInfoUpdate = pros::millis();
 		}
+
+		if (!rumbled && pros::millis() - startTime >= 90000) {
+            controller.rumble("-.-.-");
+            rumbled = true;
+        }
 
 		pros::delay(25);
 	}

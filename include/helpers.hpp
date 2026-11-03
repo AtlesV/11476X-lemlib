@@ -23,6 +23,3 @@ private:
 extern LiftPID liftPID;
 
 #endif
-
-void liftD(int speed);
-void liftStop();
