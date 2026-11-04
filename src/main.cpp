@@ -24,11 +24,21 @@ void initialize() {
 	} else if (vertical_encoder.is_installed() == false) {
 		ErrorLogger::error("Odom pod not found");
 	}
+	auto& logger = mvlib::Logger::getInstance();
+	logger.setBuildDate(__DATE__);
+
+	mvlib::setOdom(&chassis);
+
+	logger.setRobot({
+		.leftDrivetrain = &left_motor_group,
+		.rightDrivetrain = &right_motor_group
+	});
+
+	logger.start();
 
 	lift.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
 	intake.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
 	claw.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
-	clawOr.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
 	clawOr.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
 }
 

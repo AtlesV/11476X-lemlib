@@ -44,6 +44,9 @@
 #include "info.h"
 #include "errorLogger.h"
 #include "errorLogger.h"
+#include "mvlib/api.hpp"
+#include "mvlib/Optional/lemlib.hpp"
+#define MVLIB_USE_SIMPLES
 /**
  * You should add more #includes here
  */
