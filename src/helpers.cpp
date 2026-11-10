@@ -24,11 +24,14 @@ void LiftPID::move(double targetDeg) {
 LiftPID liftPID(liftRotation, lift, 5, 0, 20);
 
 void LiftPID::zero() {
-    move(-1000);
-    sensor.reset_position();
-    if (sensor.is_installed() == true) {
-        ErrorLogger::info("Rotation sensor detected");
+    if (sensor.is_installed()) {
+        ErrorLogger::error("Rotation sensor detected");
     } else {
-        ErrorLogger::info("Rotation sensor not detected");
+        ErrorLogger::error("Rotation sensor not detected");
     }
+
+    move(-1000);
+    pros::delay(500);  // Duration in milliseconds
+    move(0);           // Stop the lift
+    sensor.reset_position();
 }
